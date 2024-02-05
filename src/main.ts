@@ -29,6 +29,21 @@ app.post('/usuario', async (req, res) => {
     }
 });
 
+app.get('/ListarUsuario', async (rec, res) =>{
+   try {
+    const usuario = await firestore.getDocs(firestore.collection(db, 'usuario'))
+    const usuarioLista = usuario.docs.map((doc)=>({
+        id: doc.id,
+        ...doc.data(),
+    }))
+    res.send(usuarioLista)
+   } catch (e) {
+    console.log("Erro ao listar usuario: " + e)
+res.status(500).send("Erro ao listar usuario:" + e)
+
+   }
+})
+
 
 app.listen(3000, function () {
     console.log("Serviço rodando em http://localhost:3000")
