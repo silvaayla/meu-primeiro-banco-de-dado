@@ -44,6 +44,23 @@ res.status(500).send("Erro ao listar usuario:" + e)
    }
 })
 
+app.put('/AtualizarUsuario/:id', async (req, res) => {
+const id = req.params.id
+const nome = req.body.nome
+
+try {
+    await firestore.updateDoc(firestore.doc(db, 'usuario', id), {
+        nome:nome,
+    })
+    res.send('usuário atualizado com sucesso!')
+    
+} catch (e) {
+    console.log('Erro ao atualizar usuário' + e)
+
+    res.status(500).send('Erro ao atualizar usuário:' + e)
+    
+}
+})
 
 app.listen(3000, function () {
     console.log("Serviço rodando em http://localhost:3000")
