@@ -21,7 +21,7 @@ app.post('/usuario', async (req, res) => {
             email: email,
             telefone: telefone
         })
-        res.send("Usuario adicionado com sucesso:" + docRef.id)
+        res.send("Usuário adicionado com sucesso:" + docRef.id)
     } catch (e) {
         console.log(e)
 
@@ -38,8 +38,8 @@ app.get('/ListarUsuario', async (rec, res) =>{
     }))
     res.send(usuarioLista)
    } catch (e) {
-    console.log("Erro ao listar usuario: " + e)
-res.status(500).send("Erro ao listar usuario:" + e)
+    console.log("Erro ao listar usuário: " + e)
+res.status(500).send("Erro ao listar usuário:" + e)
 
    }
 })
@@ -52,7 +52,7 @@ try {
     await firestore.updateDoc(firestore.doc(db, 'usuario', id), {
         nome:nome,
     })
-    res.send('usuário atualizado com sucesso!')
+    res.send('Usuário atualizado com sucesso!')
     
 } catch (e) {
     console.log('Erro ao atualizar usuário' + e)
@@ -60,6 +60,22 @@ try {
     res.status(500).send('Erro ao atualizar usuário:' + e)
     
 }
+})
+
+app.delete("/deletarUsuario/:id", async (req, res)=>{
+    const id = req.params.id
+
+    try {
+        await firestore.deleteDoc(firestore.doc(db,'usuario', id))
+
+       res.send('Usuário deletado com sucesso!')
+
+
+    } catch (e) {
+        console.log('Erro ao deletar usuario:' + e )
+        
+        res.status(500).send('Erro ao deletar usuario' + e)
+    }
 })
 
 app.listen(3000, function () {
