@@ -1,8 +1,15 @@
 import express from "express";
+import cors from "cors"
 import { db, firestore } from '../banco-de-dados/firebase';
 
 const app = express();
+
 app.use(express.json())
+app.use(express.urlencoded({ extended: true}));
+app.use(cors({
+    "origin": "*",
+    "methods": " GET,HEAD,PUT,PATCH,POST,DELETE",
+}))
 
 
 app.get('/', (req, res) => {
